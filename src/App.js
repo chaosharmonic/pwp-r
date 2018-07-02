@@ -28,15 +28,15 @@ class Form extends Component {
   }
   //
   getToken() {
-    // not currently functional due to the endpoint blocking CORS requests. If we're looking to host an instance of it ourselves anyway, it should be a moot point.
-  //   $.post('https://pwpush.com/p.json', {
-  //     'password[payload]': this.state.pw,
-  //     'password[expire_after_days]': this.state.days,
-  //     'password[expire_after_views]': this.state.views
-  //   },
-  //   (data) => { this.setstate ({token: data.url_token})}
-  // );
-    // toggles state in the meantime for demo purposes. Will eventually be removed.
+    // Using the jQuery function from pwpush's API directly will throw CORS errors. If you're hosting this yourself, this should be a moot point; as stated in their API doc, just use your own instance as the target URL. For demo purposes, I've just commented it out for now.
+    //   $.post('https://pwpush.com/p.json', {
+    //     'password[payload]': this.state.pw,
+    //     'password[expire_after_days]': this.state.days,
+    //     'password[expire_after_views]': this.state.views
+    //   },
+    //   (data) => { this.setstate ({token: data.url_token})}
+    // );
+    // Toggles state in the meantime for demo purposes. Will eventually be removed.
     this.setState ({token: 'testinput'})
   }
   // reset state to original values/toggle page between input prompts and shareable link
@@ -68,6 +68,7 @@ class Form extends Component {
       );
     }
     else {
+      // as stated above, replace pwpush.com with the URL of your hosted instance
       let link = `https://pwpush.com/p/${this.state.token}`;
       return(
         <div>
