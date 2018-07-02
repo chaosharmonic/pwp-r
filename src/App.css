@@ -1,0 +1,23 @@
+body {
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+a {
+  color: rgb(0, 125, 255)
+}
+
+.text {
+  width: 20vw;
+  text-align: center
+}
+
+.numbers {
+  width: 3vw;
+  text-align: center
+}
+
+.App-intro {
+  font-size: large;
+}
