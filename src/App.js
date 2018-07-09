@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import $ from 'jquery';
+// import $ from 'jquery';
+import axios from 'axios';
 
 class Form extends Component {
   constructor(props){
@@ -34,10 +35,24 @@ class Form extends Component {
     //     'password[expire_after_days]': this.state.days,
     //     'password[expire_after_views]': this.state.views
     //   },
-    //   (data) => { this.setstate ({token: data.url_token})}
+    //   (data) => { this.setstate ({token: data.url_token}) }
     // );
+
+    // testing the use of an Axios call instead of jQuery
+    axios.post('https://pwpush.com/p.json', {
+      'password[payload]': this.state.pw,
+      'password[expire_after_days]': this.state.days,
+      'password[expire_after_views]': this.state.views
+    })
+    .then(
+      (data) => { this.setstate ({token: data.url_token}) }
+    )
+    .catch(
+      (error) => {console.log(error)}
+    );
+
     // Toggles state in the meantime for demo purposes. Will eventually be removed.
-    this.setState ({token: 'testinput'})
+    // this.setState ({token: 'testinput'})
   }
   // reset state to original values/toggle page between input prompts and shareable link
   clearToken() {
@@ -69,7 +84,7 @@ class Form extends Component {
     }
     else {
       // as stated above, replace pwpush.com with the URL of your hosted instance
-      let link = `https://pwpush.com/p/${this.state.token}`;
+      let link = `https://pwpush.com/${this.state.token}`;
       return(
         <div>
           <h2>Your shareable password link is:</h2>
