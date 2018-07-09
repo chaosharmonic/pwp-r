@@ -3,6 +3,9 @@ import './App.css';
 // import $ from 'jquery';
 import axios from 'axios';
 
+// Change this variable to that of your hosted instance. If left as is, the API call will throw CORS errors.
+const endpoint = 'https://pwpush.com'
+
 class Form extends Component {
   constructor(props){
     super(props);
@@ -29,17 +32,8 @@ class Form extends Component {
   }
   //
   getToken() {
-    // Using the jQuery function from pwpush's API directly will throw CORS errors. If you're hosting this yourself, this should be a moot point; as stated in their API doc, just use your own instance as the target URL. For demo purposes, I've just commented it out for now.
-    //   $.post('https://pwpush.com/p.json', {
-    //     'password[payload]': this.state.pw,
-    //     'password[expire_after_days]': this.state.days,
-    //     'password[expire_after_views]': this.state.views
-    //   },
-    //   (data) => { this.setstate ({token: data.url_token}) }
-    // );
-
-    // testing the use of an Axios call instead of jQuery
-    axios.post('https://pwpush.com/p.json', {
+    // Axios post request rewritten from the jQuery one in pwpush's API doc
+    axios.post(`${endpoint}/p.json`, {
       'password[payload]': this.state.pw,
       'password[expire_after_days]': this.state.days,
       'password[expire_after_views]': this.state.views
@@ -51,7 +45,16 @@ class Form extends Component {
       (error) => {console.log(error)}
     );
 
-    // Toggles state in the meantime for demo purposes. Will eventually be removed.
+    // jQuery function from pwpush's API doc, slightly modified to pull values from state. Left here as a fallback, as I'm still testing the use of Axios.
+    //   $.post(`${endpoint}/p.json`, {
+    //     'password[payload]': this.state.pw,
+    //     'password[expire_after_days]': this.state.days,
+    //     'password[expire_after_views]': this.state.views
+    //   },
+    //   (data) => { this.setstate ({token: data.url_token}) }
+    // );
+
+    // Toggles state purely for demo purposes. If you don't have your own hosted instance, you can still use this in place of the above function to view how the UI will change.
     // this.setState ({token: 'testinput'})
   }
   // reset state to original values/toggle page between input prompts and shareable link
@@ -84,7 +87,7 @@ class Form extends Component {
     }
     else {
       // as stated above, replace pwpush.com with the URL of your hosted instance
-      let link = `https://pwpush.com/${this.state.token}`;
+      let link = `${endpoint}/${this.state.token}`;
       return(
         <div>
           <h2>Your shareable password link is:</h2>
