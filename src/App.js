@@ -21,6 +21,8 @@ class Form extends Component {
     this.getToken = this.getToken.bind(this);
     this.clearToken = this.clearToken.bind(this);
   }
+
+  // Event listeners
   handlePwChange(e) {
     this.setState({pw: e.target.value});
   }
@@ -30,7 +32,8 @@ class Form extends Component {
   handleViewsChange(e) {
     this.setState({views: e.target.value});
   }
-  //
+
+  // API call. Gets a unique token from which to construct a shareable link.
   getToken() {
     // Axios post request rewritten from the jQuery one in pwpush's API doc
     axios.post(`${endpoint}/p.json`, {
@@ -57,6 +60,7 @@ class Form extends Component {
     // Toggles state purely for demo purposes. If you don't have your own hosted instance, you can still use this in place of the above function to view how the UI will change.
     // this.setState ({token: 'testinput'})
   }
+
   // reset state to original values/toggle page between input prompts and shareable link
   clearToken() {
     this.setState({
@@ -66,6 +70,7 @@ class Form extends Component {
       token: ''
     });
   }
+
   render() {
     if (this.state.token === '') {
       return (
@@ -86,7 +91,6 @@ class Form extends Component {
       );
     }
     else {
-      // as stated above, replace pwpush.com with the URL of your hosted instance
       let link = `${endpoint}/${this.state.token}`;
       return(
         <div>
